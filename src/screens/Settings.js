@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function HomeScreen({props}) {
+export default function SettingsScreen({props}) {
     return (
         <View style={styles.genericView}>
             <Text 
                 style={styles.genericText}
-                onPress={() => props.navigate('SettingsScreen')}
+                onPress={() => props.navigate('DetailScreen')}
             >
-                Home Screen Page
+                Setting Screen Page
             </Text>
         </View>
     )

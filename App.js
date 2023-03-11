@@ -1,14 +1,8 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import HomeStackNavigator from "./src/navigator/Navigation";
+import * as React from 'react';
+import MainContainer from './src/navigation/MainContainer';
 
-
-function App() {
+export default function App() {
   return (
-    <NavigationContainer>
-        <HomeStackNavigator />
-    </NavigationContainer>
+    <MainContainer/>
   );
 }
-
-export default App;
