@@ -1,0 +1,5 @@
+android {
+    defaultConfig {
+        manifestPlaceholders = [GOOGLE_KEY: "$process.env.GOOGLE_KEY"]
+    }
+}

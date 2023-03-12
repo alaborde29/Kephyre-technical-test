@@ -39,13 +39,17 @@ function getStationInfo(station_number) {
 }
 
 function initStationDatas() {
+    getStationInfo()
 
+    for (let i = 0; i < allStations.length; i++) {
+        getStationInfo(allStations[i].number)
+    }
 }
 
 export default function MainContainer({props}) {
 
     useEffect(() => {
-        initStationDatas()
+        initStationDatas();
         },
     []);
 
