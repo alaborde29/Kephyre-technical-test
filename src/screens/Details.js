@@ -6,7 +6,6 @@ export default function DetailScreen({props}) {
         <View style={styles.genericView}>
             <Text 
                 style={styles.genericText}
-                onPress={() => props.navigate('HomeScreen')}
             >
                 Details Screen Page
             </Text>
