@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import {BikeDetail} from '../components/BikeDetail';
+import {StationDetail} from '../components/StationDetail';
 
-export default function DetailScreen({props}) {
+export default function DetailScreen() {
     return (
-        <View style={styles.genericView}>
-            <Text 
-                style={styles.genericText}
-            >
-                Details Screen Page
-            </Text>
+        <View>
+            <BikeDetail props={{number: '5', avisJours: '3', numberAvis: '55'}}/>
+            {/* <StationDetail props={{
+                stationName: 'Place du Cirque', 
+                stationAdress: '3 Rue Champignon', 
+                stationNumber: '3', 
+                numberAvis: '55',
+                bikeNumber: '7',
+                parkNumber: '7',
+            }}/> */}
         </View>
     )
 }

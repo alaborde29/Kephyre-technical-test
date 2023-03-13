@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react'
-import {NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Marker from 'react-native-maps';
+
 
     let [error, setError] = useState();
     let [response, setResponse] = useState();
@@ -14,13 +13,14 @@ function getAllStations() {
         .then(
             (result) => {
                 setIsLoading(false);
-                setResponse(result);
+                setAllStations(result);
             },
             (error) => {
                 setIsLoading(false);
                 setError(error);
             },
-        )
+    )
+    return <Text>{allStations}</Text>
 }
 
 function getStationInfo(station_number) {
@@ -46,13 +46,13 @@ function initStationDatas() {
     }
 }
 
-export default function MainContainer({props}) {
+export default getAllStations;
+// export default function createStationsMarkers({props}) {
+//     initStationDatas();
+//     return ()
+// }
 
-    useEffect(() => {
-        initStationDatas();
-        },
-    []);
-
-
-    return ()
-}
+// export default function createStationsList({props}) {
+//     initStationDatas();
+//     return ()
+// }
