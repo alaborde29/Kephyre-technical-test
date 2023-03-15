@@ -4,6 +4,7 @@ import { DrawerContent, DrawerContentScrollView, DrawerItemList, createDrawerNav
 import { Image , Text, StyleSheet} from 'react-native';
 import MapScreen from '../screens/Map';
 import DetailScreen from '../screens/Details';
+import StationInfosScreen from '../screens/StationInfos';
 
 
 const Drawer = createDrawerNavigator()
@@ -36,8 +37,9 @@ export default function MainContainer({props}) {
                 screenOptions={option}
                 // drawerContent={(props) => <CustomDrawer {...props}/>}
             >
-                <Drawer.Screen name={'Map'} component={MapScreen}/>
-                <Drawer.Screen name={'Detail'} component={DetailScreen}/>
+                <Drawer.Screen name={'Carte'} component={MapScreen}/>
+                <Drawer.Screen name={'Liste des Stations'} component={DetailScreen}/>
+                <Drawer.Screen name={'Infos de la Station'} component={StationInfosScreen}/>
             </Drawer.Navigator>
         </NavigationContainer>
     )

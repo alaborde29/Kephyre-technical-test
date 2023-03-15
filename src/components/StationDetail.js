@@ -5,24 +5,37 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 function StationDetail({props}) {
     return (
         <View style={styles.container}>
-            <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="black"/>
+            {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
+            : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
             <View style={styles.container2}>
                 <View style={styles.infos}>
                     <Text>{props.stationName} - n°{props.stationNumber}</Text>
-                    <Text>{props.stationAdress}</Text>
+                    <Text style={styles.textWrapper}>{props.stationAdress}</Text>
                 </View>
                 <View style={styles.inventory}>
                     <Text style={styles.numberText}>{props.bikeNumber}</Text>
                     <Ionicons name="bicycle" size={20} color="black"/>
-                    <Text style={styles.numberText}>{props.parkNumber}</Text>
-                    <Ionicons name="car" size={20} color="black"/>
+                    <Text style={styles.numberText}>{props.freeSpace}</Text>
+                    <Ionicons name="lock-open" size={20} color="black"/>
                 </View>
             </View>
         </View>
     )
 }
 
-export { StationDetail }
+const StationList = ({ stations }) => {
+  return (
+    <>
+      {stations.map((station, index) => (
+        <StationDetail key={index} props={station} />
+      ))}
+    </>
+  );
+};
+
+export default StationList;
+
+export { StationDetail, StationList }
 
 const styles = StyleSheet.create({
     container: {
@@ -30,7 +43,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         borderBottomWidth: 2,
-        borderBottomColor: '#DDDDDD'
+        borderBottomColor: '#DDDDDD',
+        backgroundColor: 'white',
+
     },
     container2: {
         flexDirection: 'column',
@@ -47,6 +62,10 @@ const styles = StyleSheet.create({
     inventory: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: '10'
+        paddingLeft: 0
+    },
+    textWrapper : {
+        alignItems: 'flex-start',
+        flexShrink: 1,
     }
 })
