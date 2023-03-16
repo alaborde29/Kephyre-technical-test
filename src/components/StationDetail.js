@@ -6,24 +6,46 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function StationDetail({props}) {
     const navigation = useNavigation()
-    return (
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Jumanji", props)}>
-            {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
-            : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
-            <View style={styles.container2}>
-                <View style={styles.infos}>
-                    <Text>{props.stationName} - n°{props.stationNumber}</Text>
-                    <Text style={styles.textWrapper}>{props.stationAdress}</Text>
+    
+    if (props.disablePress && props.disablePress == true) {
+        return (
+            <TouchableOpacity style={styles.container}>
+                {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
+                : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
+                <View style={styles.container2}>
+                    <View style={styles.infos}>
+                        <Text>{props.stationName} - n°{props.stationNumber}</Text>
+                        <Text style={styles.textWrapper}>{props.stationAdress}</Text>
+                    </View>
+                    <View style={styles.inventory}>
+                        <Text style={styles.numberText}>{props.bikeNumber}</Text>
+                        <Ionicons name="bicycle" size={20} color="black"/>
+                        <Text style={styles.numberText}>{props.freeSpace}</Text>
+                        <Ionicons name="lock-open" size={20} color="black"/>
+                    </View>
                 </View>
-                <View style={styles.inventory}>
-                    <Text style={styles.numberText}>{props.bikeNumber}</Text>
-                    <Ionicons name="bicycle" size={20} color="black"/>
-                    <Text style={styles.numberText}>{props.freeSpace}</Text>
-                    <Ionicons name="lock-open" size={20} color="black"/>
+            </TouchableOpacity>
+        )
+    } else {
+        return (
+            <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Jumanji", props)}>
+                {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
+                : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
+                <View style={styles.container2}>
+                    <View style={styles.infos}>
+                        <Text>{props.stationName} - n°{props.stationNumber}</Text>
+                        <Text style={styles.textWrapper}>{props.stationAdress}</Text>
+                    </View>
+                    <View style={styles.inventory}>
+                        <Text style={styles.numberText}>{props.bikeNumber}</Text>
+                        <Ionicons name="bicycle" size={20} color="black"/>
+                        <Text style={styles.numberText}>{props.freeSpace}</Text>
+                        <Ionicons name="lock-open" size={20} color="black"/>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
-    )
+            </TouchableOpacity>
+        )
+    }
 }
 
 const StationList = ({ stations }) => {

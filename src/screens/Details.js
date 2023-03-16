@@ -16,6 +16,14 @@ export default function DetailScreen(props) {
     const [stationsProps, setStationsProps] = useState([]);
     const [searchQuery, setSearchQuery] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(true);
+    const [openOnly, setOpenOnly] = useState(false);
+    const [freeOnly, setFreeOnly] = useState(false);
+    const [ridable, setRidable] = useState(false);
+    const [buttonColorToggle, setButtonColorToggle] = useState({
+        stationColor: "#ededed",
+        parkColor: "#ededed",
+        bikeColor: "#ededed"
+    });
     const onChangeSearch = query => setSearchQuery(query);
     const api_key = JCD_KEY
 
@@ -52,6 +60,57 @@ export default function DetailScreen(props) {
             },  
         )
     }, []);
+
+    const handleOpenOnlyToggle = () => {
+        setOpenOnly(!openOnly);
+        if (buttonColorToggle.stationColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: "#63a85d",
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: "#ededed",
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        }
+    };
+
+    const handleFreeOnlyToggle = () => {
+        setFreeOnly(!freeOnly);
+        if (buttonColorToggle.parkColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: "#63a85d",
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: "#ededed",
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        }
+    };
+
+    const handleRidableToggle = () => {
+        setRidable(!ridable);
+        if (buttonColorToggle.bikeColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: "#63a85d",
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: "#ededed",
+            })
+        }
+    };
     
     if (isLoading) {
         return (
@@ -64,7 +123,11 @@ export default function DetailScreen(props) {
             <View>
                 <ScrollView contentContainerStyle={styles.genericView}>
                     <View style={styles.emptySpace}/>
-                    <StationList stations={stationsProps}/>
+                    <StationList stations={stationsProps.filter(station =>
+                        (!openOnly || station.isOpen) &&
+                        (!freeOnly || station.freeSpace > 0) && 
+                        (!ridable || station.bikeNumber > 0)
+                    )} />
                 </ScrollView>
                 <View style={styles.hoverContainer}>
                     <Searchbar
@@ -74,6 +137,17 @@ export default function DetailScreen(props) {
                         style={styles.searchBar}
                     />
                 </View>
+                <ScrollView style={styles.filters} horizontal={true} showsHorizontalScrollIndicator={false}>
+                    <Button icon="bike" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.stationColor} textColor='black' onPress={() => handleOpenOnlyToggle()}>
+                        Station ouverte
+                    </Button>
+                    <Button icon="parking" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.parkColor} textColor='black' onPress={() => handleFreeOnlyToggle()}>
+                        Place disponible
+                    </Button>
+                    <Button icon="bicycle" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.bikeColor} textColor='black' onPress={() => handleRidableToggle()}>
+                        Vélo disponible
+                    </Button>
+                </ScrollView>
             </View>
         );
     }
@@ -98,6 +172,23 @@ const styles = StyleSheet.create({
     },
     emptySpace: {
         backgroundColor: 'white',
-        height: 60
+        height: 115
+    },
+    filters: {
+        position: 'absolute',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        marginTop: 80,
+    },
+    buttonSelected: {
+        marginHorizontal: 5
+    },
+    buttonDeselected: {
+        marginHorizontal: 5,
+        borderColor: 'green',
+        elevation: 20,
+        shadowColor: 'black',
+        shadowRadius: 5,
+        shadowOpacity: '70%'
     }
 })

@@ -6,6 +6,7 @@ import { Image , Text, StyleSheet} from 'react-native';
 import MapScreen from '../screens/Map';
 import DetailScreen from '../screens/Details';
 import StationInfosScreen from '../screens/StationInfos';
+import FindRouteScreen from '../screens/FindRoute';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +32,23 @@ const detailsOptions={
         fontWeight: "bold",
         color: "white",
     },
+    headerShown: true,
+    // transitionSpec: {
+    //     open: animConfig,
+    //     close: animConfig,
+    // }
+}
+
+const mapOptions={
+    headerStyle: {
+        backgroundColor: "#598633",
+    },
+    headerTintColor: "white",
+    headerTitleStyle: {
+        fontWeight: "bold",
+        color: "white",
+    },
+    headerShown: false,
     // transitionSpec: {
     //     open: animConfig,
     //     close: animConfig,
@@ -49,10 +67,19 @@ const animConfig = {
     },
   };
 
-function DetailContainer({props}) {
+  function DetailContainer({props}) {
     return (
         <Stack.Navigator screenOptions={detailsOptions}>
             <Stack.Screen name={'Liste des Stations'} component={DetailScreen}/>
+            <Stack.Screen name={'Jumanji'} component={StationInfosScreen}/>
+        </Stack.Navigator>
+    )
+}
+
+function MapContainer({props}) {
+    return (
+        <Stack.Navigator screenOptions={mapOptions}>
+            <Stack.Screen name={'Carte'} component={MapScreen}/>
             <Stack.Screen name={'Jumanji'} component={StationInfosScreen}/>
         </Stack.Navigator>
     )
@@ -73,10 +100,10 @@ export default function MainContainer({props}) {
             <Drawer.Navigator
                 screenOptions={drawerOptions}
                 // drawerContent={(props) => <CustomDrawer {...props}/>}
-            >
-                <Drawer.Screen name={'Carte'} component={MapScreen}/>
+            >   
+                <Drawer.Screen name={'Plan de la ville'} component={MapContainer} options={{ headerShown: true }}/>
                 <Drawer.Screen name={'Liste des stations'} component={DetailContainer} options={{ headerShown: false }}/>
-                <Drawer.Screen name={'Infos de la Station'} component={StationInfosScreen}/>
+                <Drawer.Screen name={'Rechercher Itinéraire'} component={FindRouteScreen} options={{ headerShown: true }}/>
             </Drawer.Navigator>
         </NavigationContainer>
     )

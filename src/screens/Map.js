@@ -5,6 +5,8 @@ import MapView, { Marker } from 'react-native-maps';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { JCD_KEY } from '@env';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as Location from 'expo-location';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,7 @@ export default function MapScreen() {
     const [region, setRegion] = useState(defaultRegion);
     const api_key = JCD_KEY
     const mapRef = React.createRef();
+    const navigation = useNavigation()
 
     useEffect(() => {
         fetch(
@@ -34,13 +37,25 @@ export default function MapScreen() {
               const locations = [];
     
               for (let i = 0; i < result.length; i++) {
-                const props = {
-                  latitude: result[i].position.latitude,
-                  longitude: result[i].position.longitude,
-                  latitudeDelta: 0.1,
-                  longitudeDelta: 0.1,
-                };
-                locations.push(props);
+                    let openStatus = true;
+                    if (result[i].status != "OPEN")
+                        openStatus = false;
+                    const props = {
+                        pos: {
+                            latitude: result[i].position.latitude,
+                            longitude: result[i].position.longitude,
+                            latitudeDelta: 0.1,
+                            longitudeDelta: 0.1,
+                        },
+                        stationName: result[i].name, 
+                        stationAdress: result[i].address, 
+                        stationNumber: result[i].number, 
+                        isOpen: openStatus,
+                        bikeNumber: result[i].totalStands.availabilities.bikes,
+                        freeSpace: result[i].totalStands.availabilities.stands,
+                        location: result[i].position
+                    };
+                    locations.push(props);
               }
               setAllMarkerLocation(locations);
               setIsLoading(false); // set loading to false after data is fetched
@@ -50,7 +65,17 @@ export default function MapScreen() {
               setIsLoading(false);
             }
           );
-      }, []);
+        //   (async () => {
+        //     let { status } = await  Location.requestForegroundPermissionsAsync();
+        //    if (status !== 'granted') {
+        //       setStatus('Permission to access location was denied');
+        //       return;
+        //    } else {
+        //      console.log('Access granted!!')
+        //      setStatus(status)     }
+          
+        //   })();
+    }, []);
     
     const MarkerList = (props) => {
         const { markerLocation } = props;
@@ -58,7 +83,12 @@ export default function MapScreen() {
         return (
             <>
                 {markerLocation.map((marker, index) => (
-                    <Marker key={index} coordinate={marker} />
+                    <Marker 
+                        key={index} 
+                        coordinate={marker.pos} 
+                        pinColor={marker.openStatus ? 'red' : 'green'}
+                        onPress={() => navigation.navigate("Jumanji", marker)}
+                    />
                 ))}
             </>
         );

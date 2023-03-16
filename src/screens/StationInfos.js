@@ -10,33 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-// const stationsProps = [
-//     {
-//         stationName: 'Place du Cirque', 
-//         stationAdress: '3 Rue Champignon', 
-//         stationNumber: '3', 
-//         numberAvis: '55',
-//         bikeNumber: '7',
-//         parkNumber: '7',
-//     },
-//     {
-//         stationName: 'Commerces', 
-//         stationAdress: '72 Avenue de l\'orange', 
-//         stationNumber: '9', 
-//         numberAvis: '72',
-//         bikeNumber: '0',
-//         parkNumber: '11',
-//     },
-//     {
-//         stationName: 'Aristide Brillant', 
-//         stationAdress: '123 Route du Colonel Moutarde', 
-//         stationNumber: '8', 
-//         numberAvis: '27',
-//         bikeNumber: '10',
-//         parkNumber: '3',
-//     }
-// ]
-
 const placeholderBike = {
     number: 95,
     numberAvis: 98,
@@ -60,6 +33,7 @@ export default function StationInfosScreen(props) {
         stationAdress: props.route.params.stationAdress,
         bikeNumber: props.route.params.bikeNumber,
         freeSpace: props.route.params.freeSpace,
+        disablePress: true
     }
 
     const bikes = Array.from({ length: props.route.params.bikeNumber })
@@ -67,7 +41,7 @@ export default function StationInfosScreen(props) {
     useEffect(() => {
         navigation.setOptions({ title: props.route.params.stationName });
     }, [navigation, props.route.params.stationName])
-    
+
     return (
         <View>
             <MapView style={styles.map} initialRegion={defaultRegion} region={defaultRegion} scrollEnabled={false} zoomEnabled={false} rotateEnabled={false} pitchEnabled={false}>
