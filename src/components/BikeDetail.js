@@ -1,12 +1,22 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Animated, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Swipeable, RectButton } from 'react-native-gesture-handler';
 
 function BikeDetail({props}) {
+    const createTwoButtonAlert = () =>
+    Alert.alert('Vélo n°8', 'Souhaitez-vous débloquer ce vélo ?', [
+      {
+        text: 'Oui',
+        onPress: () => console.log('Oui Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Non', onPress: () => console.log('Non Pressed')},
+    ]);
+
     renderLeftActions = () => {
         return (
-            <RectButton style={styles.leftAction} onPress={console.log('damn')}>
+            <RectButton style={styles.leftAction} onPress={() => createTwoButtonAlert()}>
                 <Text style={styles.actionText}>
                         Débloquer
                 </Text>

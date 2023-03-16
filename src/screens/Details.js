@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import {BikeDetail} from '../components/BikeDetail';
-import { Searchbar, IconButton } from 'react-native-paper';
+import { Searchbar, IconButton, Button } from 'react-native-paper';
 import {StationDetail, StationList} from '../components/StationDetail';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ActivityIndicator, ScrollView, View, Text, StyleSheet, SafeAreaView  } from 'react-native';
 import { JCD_KEY } from '@env';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-export default function DetailScreen() {
+export default function DetailScreen(props) {
     let [error, setError] = useState();
     let [allStations, setAllStations] = useState();
     const [stationsProps, setStationsProps] = useState([]);

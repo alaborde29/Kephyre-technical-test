@@ -82,7 +82,7 @@ export default function MapScreen() {
     
       return (
         <SafeAreaView style={styles.genericView}>
-            <MapView style={styles.map} initialRegion={defaultRegion} region={region} ref={mapRef}>
+            <MapView style={styles.map} initialRegion={defaultRegion} region={region} ref={mapRef} showsUserLocation={true}>
                 <MarkerList markerLocation={allMarkerLocation} />
             </MapView>
             <View style={styles.buttonView}>

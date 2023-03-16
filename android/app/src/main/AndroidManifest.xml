@@ -4,4 +4,5 @@
    <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyDRa_-KcbuOlc0m1PUvp1gSexWx0ffkw3U"/>
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </application>

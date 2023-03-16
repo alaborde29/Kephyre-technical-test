@@ -1,10 +1,13 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function StationDetail({props}) {
+    const navigation = useNavigation()
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Jumanji")}>
             {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
             : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
             <View style={styles.container2}>
@@ -19,7 +22,7 @@ function StationDetail({props}) {
                     <Ionicons name="lock-open" size={20} color="black"/>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -27,7 +30,7 @@ const StationList = ({ stations }) => {
   return (
     <>
       {stations.map((station, index) => (
-        <StationDetail key={index} props={station} />
+        <StationDetail key={index} props={station}/>
       ))}
     </>
   );
