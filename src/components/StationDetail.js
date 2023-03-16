@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 function StationDetail({props}) {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Jumanji")}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("Jumanji", props)}>
             {props.isOpen ? <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="green"/>
             : <Ionicons style={{paddingRight: 20, paddingLeft: 10}} name="location" size={40} color="red"/>}
             <View style={styles.container2}>

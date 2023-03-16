@@ -55,7 +55,6 @@ export default function MapScreen() {
     const MarkerList = (props) => {
         const { markerLocation } = props;
         
-        console.log(props)
         return (
             <>
                 {markerLocation.map((marker, index) => (

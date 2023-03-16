@@ -6,6 +6,7 @@ import {BikeDetail} from '../components/BikeDetail';
 import {StationDetail, StationList} from '../components/StationDetail';
 import { createStackNavigator } from '@react-navigation/stack';
 import { JCD_KEY } from '@env';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
@@ -36,22 +37,6 @@ const Stack = createStackNavigator();
 //     }
 // ]
 
-const defaultRegion = {
-    latitude: 47.222651271133344,
-    longitude: -1.5535926509194946,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-}
-
-const placeholderStation = {
-    isOpen: true,
-    stationName: '010- PICASSO',
-    stationNumber: '7',
-    stationAdress: "12, mail Pablo Picasso",
-    bikeNumber: "8",
-    freeSpace: "2"
-}
-
 const placeholderBike = {
     number: 95,
     numberAvis: 98,
@@ -59,23 +44,41 @@ const placeholderBike = {
 }
 
 export default function StationInfosScreen(props) {
+    const navigation = useNavigation()
+
+    const defaultRegion = {
+        latitude: props.route.params.location.latitude,
+        longitude: props.route.params.location.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+    }
+
+    const Station = {
+        isOpen: props.route.params.isOpen,
+        stationName: props.route.params.stationName,
+        stationNumber: props.route.params.stationNumber,
+        stationAdress: props.route.params.stationAdress,
+        bikeNumber: props.route.params.bikeNumber,
+        freeSpace: props.route.params.freeSpace,
+    }
+
+    const bikes = Array.from({ length: props.route.params.bikeNumber })
+    
+    useEffect(() => {
+        navigation.setOptions({ title: props.route.params.stationName });
+    }, [navigation, props.route.params.stationName])
+    
     return (
         <View>
             <MapView style={styles.map} initialRegion={defaultRegion} region={defaultRegion} scrollEnabled={false} zoomEnabled={false} rotateEnabled={false} pitchEnabled={false}>
-                <Marker coordinate={{
-                    latitude: 47.222651271133344,
-                    longitude: -1.5535926509194946,
-                    latitudeDelta: 0.2,
-                    longitudeDelta: 0.2,
-                }}/>
+                <Marker coordinate={defaultRegion}/>
             </MapView>
-            <StationDetail props={placeholderStation}/>
-            <ScrollView>
-                <BikeDetail props={placeholderBike}/>
-                <BikeDetail props={placeholderBike}/>
-                <BikeDetail props={placeholderBike}/>
-                <BikeDetail props={placeholderBike}/>
-            </ScrollView>
+            <StationDetail props={Station}/>
+            {props.route.params.bikeNumber > 0 && (
+                <ScrollView>
+                    {bikes.map((_, index) => <BikeDetail key={index} props={placeholderBike} />)}
+                </ScrollView>
+            )}
         </View>
     )
 }

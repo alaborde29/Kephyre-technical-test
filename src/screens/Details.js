@@ -26,9 +26,7 @@ export default function DetailScreen(props) {
             (result) => {
                 const stations = [];
 
-                console.log(result);
                 setAllStations(result);
-                setIsLoading(false);
 
                 for (let i = 0; i < result.length; i++) {
                         let openStatus = true;
@@ -39,10 +37,12 @@ export default function DetailScreen(props) {
                             stationAdress: result[i].address, 
                             stationNumber: result[i].number, 
                             isOpen: openStatus,
-                            bikeNumber: '7',
-                            freeSpace: '7',
+                            bikeNumber: result[i].totalStands.availabilities.bikes,
+                            freeSpace: result[i].totalStands.availabilities.stands,
+                            location: result[i].position
                         };
                         stations.push(props);
+                        setIsLoading(false);
                 }
                 setStationsProps(stations);
             },
