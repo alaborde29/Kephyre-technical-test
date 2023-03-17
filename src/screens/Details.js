@@ -111,6 +111,10 @@ export default function DetailScreen(props) {
             })
         }
     };
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+      };
     
     if (isLoading) {
         return (
@@ -126,13 +130,14 @@ export default function DetailScreen(props) {
                     <StationList stations={stationsProps.filter(station =>
                         (!openOnly || station.isOpen) &&
                         (!freeOnly || station.freeSpace > 0) && 
-                        (!ridable || station.bikeNumber > 0)
+                        (!ridable || station.bikeNumber > 0) &&
+                        (station.stationName.toLowerCase().includes(searchQuery.toLowerCase())) // Ajout de la condition de recherche
                     )} />
                 </ScrollView>
                 <View style={styles.hoverContainer}>
                     <Searchbar
                         placeholder="Rechercher une station"
-                        onChangeText={onChangeSearch}
+                        onChangeText={handleSearch}
                         value={searchQuery}
                         style={styles.searchBar}
                     />
