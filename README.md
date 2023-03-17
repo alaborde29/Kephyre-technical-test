@@ -1,8 +1,6 @@
 
 
-[![MIT License](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
-
-![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+[![MIT License](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](https://choosealicense.com/licenses/mit/) ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 # Kephyre Technical Test
 
@@ -14,6 +12,7 @@ A recreation of the bike renting  mobile application "Bicloo" using the JCDecaux
 To run this project, you will need to add the following environment variables to your .env file
 
 `JCD_KEY` : A JCDecaux API key. You can generate one [here](https://developer.jcdecaux.com/#/login)
+`GOOGLE_KEY` : A Google Cloud app API key. You can generate one [here](https://cloud.google.com/docs/authentication/api-keys?hl=fr)
 
 ## Run Locally
 
