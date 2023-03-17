@@ -78,32 +78,20 @@ export default function RenderRoute(props) {
         return bestLocation;
     }
 
-    if (!startStation || !arrivaleStation) {
-        return null; // Afficher un écran de chargement ou un indicateur de chargement
-    }
-
     return (
-        <>
-            {isLoading ? (
-              <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-                startStation && arrivaleStation ? (
                     <View>
                         <MapView initialRegion={defaultRegion} style={styles.map}>
                             <MapViewDirections
-                                origin={startStation}
-                                destination={arrivaleStation}
+                                origin={{latitude: props.start.lat, longitude: props.start.lng}}
+                                destination={{latitude: props.end.lat, longitude: props.end.lng}}
                                 apikey={GOOGLE_KEY} // insert your API Key here
                                 strokeWidth={4}
                                 strokeColor="#4287f5"
                             />
-                            <Marker coordinate={startStation} />
-                            <Marker coordinate={arrivaleStation} />
+                            <Marker coordinate={{latitude: props.start.lat, longitude: props.start.lng}} />
+                            <Marker coordinate={{latitude: props.end.lat, longitude: props.end.lng}} />
                         </MapView>
                     </View>
-                ) : null
-            )}
-        </>
     );
 }
 
