@@ -5,10 +5,11 @@ import MapView, { Marker } from 'react-native-maps';
 import {BikeDetail} from '../components/BikeDetail';
 import {StationDetail, StationList} from '../components/StationDetail';
 import { createStackNavigator } from '@react-navigation/stack';
-import { JCD_KEY } from '@env';
+import { JCD_KEY, GOOGLE_KEY } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import { Searchbar } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 const Stack = createStackNavigator();
 
@@ -39,8 +40,8 @@ export default function FindRouteScreen(props) {
                     <Ionicons name={'ellipsis-vertical-outline'} color={'white'} size={30}/>
                     <Ionicons name={'location'} color={'white'} size={30}/>
                 </View>
-                <View>
-                    <Searchbar
+                <View style={styles.routeBar}>
+                    {/* <Searchbar
                         placeholder="Rechercher une station"
                         onChangeText={onChangeSearchStart}
                         value={searchQueryStart}
@@ -52,7 +53,30 @@ export default function FindRouteScreen(props) {
                         onChangeText={onChangeSearchEnd}
                         value={searchQueryEnd}
                         style={styles.routeBar}
+
                         inputStyle={styles.barText}
+                    /> */}
+                    <GooglePlacesAutocomplete
+                        placeholder='Départ'
+                        onPress={(data, details = null) => {
+                          // Récupérer les informations de l'adresse sélectionnée
+                        }}
+                        query={{
+                            key: GOOGLE_KEY,
+                            language: 'fr',
+                            components: 'country:fr',
+                        }}
+                    />
+                    <GooglePlacesAutocomplete
+                        placeholder='Arrivée'
+                        onPress={(data, details = null) => {
+                          // Récupérer les informations de l'adresse sélectionnée
+                        }}
+                        query={{
+                            key: GOOGLE_KEY,
+                            language: 'fr',
+                            components: 'country:fr',
+                        }}
                     />
                 </View>
                 <View style={styles.headerSwitchButton}>
@@ -86,10 +110,10 @@ const styles = StyleSheet.create({
     },
     routeBar: {
         backgroundColor: "#9dc779",
-        height: 40,
-        marginBottom: 10,
-        marginTop: 10,
-        width: 250
+        marginBottom: 20,
+        marginTop: 20,
+        height: 100,
+        width: 250,
     },
     headerSideIcons: {
         flexDirection: 'column',

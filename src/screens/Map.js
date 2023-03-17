@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Searchbar, IconButton } from 'react-native-paper';
+import { Searchbar, IconButton, Button } from 'react-native-paper';
 import { JCD_KEY } from '@env';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Location from 'expo-location';
@@ -16,6 +16,14 @@ export default function MapScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
     const onChangeSearch = query => setSearchQuery(query);
+    const [openOnly, setOpenOnly] = useState(false);
+    const [freeOnly, setFreeOnly] = useState(false);
+    const [ridable, setRidable] = useState(false);
+    const [buttonColorToggle, setButtonColorToggle] = useState({
+        stationColor: "#ededed",
+        parkColor: "#ededed",
+        bikeColor: "#ededed"
+    });
     const defaultRegion = {
         latitude: 47.222651271133344,
         longitude: -1.5535926509194946,
@@ -65,16 +73,6 @@ export default function MapScreen() {
               setIsLoading(false);
             }
           );
-        //   (async () => {
-        //     let { status } = await  Location.requestForegroundPermissionsAsync();
-        //    if (status !== 'granted') {
-        //       setStatus('Permission to access location was denied');
-        //       return;
-        //    } else {
-        //      console.log('Access granted!!')
-        //      setStatus(status)     }
-          
-        //   })();
     }, []);
     
     const MarkerList = (props) => {
@@ -99,6 +97,57 @@ export default function MapScreen() {
         mapRef.current.animateToRegion(defaultRegion)
     }
 
+    const handleOpenOnlyToggle = () => {
+        setOpenOnly(!openOnly);
+        if (buttonColorToggle.stationColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: "#63a85d",
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: "#ededed",
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        }
+    };
+
+    const handleFreeOnlyToggle = () => {
+        setFreeOnly(!freeOnly);
+        if (buttonColorToggle.parkColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: "#63a85d",
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: "#ededed",
+                bikeColor: buttonColorToggle.bikeColor
+            })
+        }
+    };
+
+    const handleRidableToggle = () => {
+        setRidable(!ridable);
+        if (buttonColorToggle.bikeColor == "#ededed") {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: "#63a85d",
+            })
+        } else {
+            setButtonColorToggle({
+                stationColor: buttonColorToggle.stationColor,
+                parkColor: buttonColorToggle.parkColor,
+                bikeColor: "#ededed",
+            })
+        }
+    };
+
 
     if (isLoading) {
         // if data is loading, show the spinner
@@ -111,8 +160,18 @@ export default function MapScreen() {
     
       return (
         <SafeAreaView style={styles.genericView}>
-            <MapView style={styles.map} initialRegion={defaultRegion} region={region} ref={mapRef} showsUserLocation={true}>
-                <MarkerList markerLocation={allMarkerLocation} />
+            <MapView
+                style={styles.map}
+                initialRegion={defaultRegion}
+                region={region}
+                ref={mapRef}
+                showsCompass={false}
+            >
+                <MarkerList markerLocation={allMarkerLocation.filter(allMarkerLocation =>
+                    (!openOnly || allMarkerLocation.isOpen) &&
+                    (!freeOnly || allMarkerLocation.freeSpace > 0) && 
+                    (!ridable || allMarkerLocation.bikeNumber > 0)
+                )} />
             </MapView>
             <View style={styles.buttonView}>
                 <IconButton
@@ -130,6 +189,17 @@ export default function MapScreen() {
                     onPress={() => console.log('Pressed')}
                 />
             </View>
+            <ScrollView style={styles.filters} horizontal={true} showsHorizontalScrollIndicator={false}>
+                <Button icon="bike" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.stationColor} textColor='black' onPress={() => handleOpenOnlyToggle()}>
+                    Station ouverte
+                </Button>
+                <Button icon="parking" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.parkColor} textColor='black' onPress={() => handleFreeOnlyToggle()}>
+                    Place disponible
+                </Button>
+                <Button icon="bicycle" mode="contained" style={styles.buttonDeselected} buttonColor={buttonColorToggle.bikeColor} textColor='black' onPress={() => handleRidableToggle()}>
+                    Vélo disponible
+                </Button>
+            </ScrollView>
         </SafeAreaView>
       );
 }
@@ -150,10 +220,25 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         position: 'absolute',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        top: '90%',
-    },
+        alignContent: "space-around",
+        justifyContent: 'space-around',
+        flexDirection: 'column',
+        top: '80%',
+        left: '80%'
 
+    },
+    filters: {
+        position: 'absolute',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        top: 20
+    },
+    buttonDeselected: {
+        marginHorizontal: 5,
+        borderColor: 'green',
+        elevation: 20,
+        shadowColor: 'black',
+        shadowRadius: 5,
+        shadowOpacity: '70%'
+    }
 })

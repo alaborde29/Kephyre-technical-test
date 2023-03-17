@@ -180,9 +180,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 80,
     },
-    buttonSelected: {
-        marginHorizontal: 5
-    },
     buttonDeselected: {
         marginHorizontal: 5,
         borderColor: 'green',
