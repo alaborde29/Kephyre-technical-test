@@ -12,6 +12,7 @@ A recreation of the bike renting  mobile application "Bicloo" using the JCDecaux
 To run this project, you will need to add the following environment variables to your .env file
 
 `JCD_KEY` : A JCDecaux API key. You can generate one [here](https://developer.jcdecaux.com/#/login)
+
 `GOOGLE_KEY` : A Google Cloud app API key. You can generate one [here](https://cloud.google.com/docs/authentication/api-keys?hl=fr)
 
 ## Run Locally
