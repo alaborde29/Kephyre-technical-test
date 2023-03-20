@@ -42,14 +42,6 @@ Start the server
 ```
 You need to have [expo](https://expo.dev/client) installed on your mobile device in order to see the application working.
 
-## Authors
-
-- [@alaborde29](https://www.github.com/alaborde29)
-
-
-[![Logo](https://avatars.githubusercontent.com/u/72009912?v=4)](https://www.github.com/alaborde29)
-
-
 ## Screenshots
 
 ![Carte des stations](https://media.discordapp.net/attachments/536549184749436934/1087298832926253116/Screenshot_20230320_095409_host.exp.exponent.jpg?width=313&height=670)
@@ -58,3 +50,9 @@ You need to have [expo](https://expo.dev/client) installed on your mobile device
 ![Détails d'une station et débloquage d'un vélo](https://media.discordapp.net/attachments/536549184749436934/1087298832414547968/Screenshot_20230320_095547_host.exp.exponent.jpg?width=313&height=670)
 ![Recherche d'itinéraires](https://media.discordapp.net/attachments/536549184749436934/1087298832074805279/Screenshot_20230320_095635_host.exp.exponent.jpg?width=313&height=670)
 
+## Authors
+
+- [@alaborde29](https://www.github.com/alaborde29)
+
+
+[![Logo](https://avatars.githubusercontent.com/u/72009912?v=4)](https://www.github.com/alaborde29)
