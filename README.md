@@ -54,6 +54,7 @@ You need to have [expo](https://expo.dev/client) installed on your mobile device
 
 ![Carte des stations](https://media.discordapp.net/attachments/536549184749436934/1087298832926253116/Screenshot_20230320_095409_host.exp.exponent.jpg?width=313&height=670)
 ![Liste des stations](https://media.discordapp.net/attachments/536549184749436934/1087298832682979348/Screenshot_20230320_095522_host.exp.exponent.jpg?width=313&height=670)
+
 ![Détails d'une station et débloquage d'un vélo](https://media.discordapp.net/attachments/536549184749436934/1087298832414547968/Screenshot_20230320_095547_host.exp.exponent.jpg?width=313&height=670)
 ![Recherche d'itinéraires](https://media.discordapp.net/attachments/536549184749436934/1087298832074805279/Screenshot_20230320_095635_host.exp.exponent.jpg?width=313&height=670)
 
